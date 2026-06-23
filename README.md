@@ -1,6 +1,9 @@
 **Setup Command**
+
 cd ~/wheelchair_ws
+
 colcon build --symlink-install
+
 source install/setup.bash
 
 Terminal 1:
