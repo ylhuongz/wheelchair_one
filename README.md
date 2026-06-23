@@ -2,7 +2,7 @@
 
 cd ~/wheelchair_ws
 
-colcon build --symlink-install
+colcon build --symlink-install  # only first-time running package
 
 source install/setup.bash
 
