@@ -7,19 +7,19 @@ sudo apt update
 
 sudo apt upgrade
 
-sudo apt install ros-jazzy-desktop  *# install ros2 jazzy*
+sudo apt install ros-jazzy-desktop  **# install ros2 jazzy**
 
-source /opt/ros/jazzy/setup.bash  *# connect terminal to ros2*
+source /opt/ros/jazzy/setup.bash  **# connect terminal to ros2**
 
-sudo apt-get install ros-jazzy-ros-gz  *# install gazebo*
+sudo apt-get install ros-jazzy-ros-gz  **# install gazebo**
 
-sudo apt install ros-jazzy-joint-state-publisher-gui  *# install sliders for wheels*
+sudo apt install ros-jazzy-joint-state-publisher-gui  **# install sliders for wheels**
 
 **after first time**
 
 cd ~/wheelchair_ws
 
-colcon build --symlink-install  *# first-time running package ONLY*
+colcon build --symlink-install  **# first-time running package ONLY**
 
 source install/setup.bash
 
