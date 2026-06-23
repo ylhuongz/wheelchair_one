@@ -1,4 +1,21 @@
+**NOTE:** This is for ROS2 Jazzy version
+
 **Setup Command**
+# first time setup
+
+sudo apt update
+
+sudo apt upgrade
+
+sudo apt install ros-jazzy-desktop  # install ros2 jazzy
+
+source /opt/ros/jazzy/setup.bash  # connect terminal to ros2
+
+sudo apt-get install ros-jazzy-ros-gz  # install gazebo
+
+sudo apt install ros-jazzy-joint-state-publisher-gui  # install sliders for wheels
+
+# after first time
 
 cd ~/wheelchair_ws
 
