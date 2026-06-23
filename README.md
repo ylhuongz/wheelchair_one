@@ -14,3 +14,10 @@ rviz2
 
 Terminal 3:
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+
+Once RVIZ is up and running, do the following to see the robot model:
+
+click "Add" --> "TF"
+
+click "Add" --> "RobotModel"
