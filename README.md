@@ -1,4 +1,4 @@
-**NOTE:** This is for ROS2 Jazzy version
+**NOTE:** This is for ROS2 Jazzy
 
 # Setup Command
 **first time setup**
