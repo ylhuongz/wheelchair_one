@@ -1,17 +1,12 @@
 import os
-
 from ament_index_python.packages import get_package_share_directory
-
 from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch.actions import DeclareLaunchArgument
 from launch_ros.actions import Node
-
 import xacro
 
-
 def generate_launch_description():
-
     # Check if we're told to use sim time
     use_sim_time = LaunchConfiguration('use_sim_time')
 
@@ -29,7 +24,6 @@ def generate_launch_description():
         parameters=[params]
     )
 
-
     # Launch!
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -39,3 +33,5 @@ def generate_launch_description():
 
         node_robot_state_publisher
     ])
+
+    
