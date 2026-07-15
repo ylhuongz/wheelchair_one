@@ -74,6 +74,8 @@
             <topic>joint_states</topic>
             <joint_name>left_wheel_joint</joint_name>
             <joint_name>right_wheel_joint</joint_name>
+            <joint_name>caster_left_joint</joint_name>
+            <joint_name>caster_right_joint</joint_name>
         </plugin>
     </gazebo>
 
@@ -92,8 +94,8 @@
             <always_on>true</always_on>
             <visualize>true</visualize>
             <topic>scan</topic>
-            <update_rate>1</update_rate> <!-- Hz -->
-            <!-- <gz_frame_id>base_scan</gz_frame_id> -->
+            <update_rate>10</update_rate> <!-- Hz -->
+            <gz_frame_id>lidar</gz_frame_id>
             
             <lidar>
                 <scan>
@@ -108,7 +110,7 @@
                 <range>
                     <min>0.01</min>
                     <max>12.0</max>
-                    <resolution>0.005</resolution>
+                    <resolution>0.01</resolution>   <!-- 0.005 -->
                 </range>
 
                 <noise>
