@@ -16,10 +16,24 @@ sudo apt install ros-jazzy-joint-state-publisher-gui    # install sliders for wh
 cd ~/wheelchair_ws
 colcon build --symlink-install    # first-time running package ONLY
 source install/setup.bash
+```
+### Launch Rviz
+```bash
 ros2 launch wheelchair_one rsp.launch.py
 ```
-Once RVIZ is up and running, do the following to see the robot model:
+
+### Launch Gazebo
+Note: Make sure all terminals are sourced
+
+Terminal 1 (launch):
 ```bash
-click "Add" --> "TF"
-click "Add" --> "RobotModel"
+ros2 launch wheelchair_one gazebo_model.launch.py
+```
+Terminal 2 (lidar readings):
+```bash
+ros2 topic echo /scan --field ranges
+```
+Terminal 3 (control):
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
