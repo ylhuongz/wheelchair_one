@@ -8,7 +8,10 @@ import xacro
 
 def generate_launch_description():
     # Check if we're told to use sim time
-    use_sim_time = LaunchConfiguration('use_sim_time')
+    use_sim_time = False
+
+    # Name of package and folder used to define the paths
+    namePackage = 'wheelchair_one'
 
     # Process the URDF file
     pkg_path = os.path.join(get_package_share_directory('wheelchair_one'))
@@ -17,20 +20,23 @@ def generate_launch_description():
     
     # Create a robot_state_publisher node
     params = {'robot_description': robot_description_config.toxml(), 'use_sim_time': use_sim_time}
-    node_robot_state_publisher = Node(
+    robotStatePublisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
         parameters=[params]
     )
 
-    node_rviz = Node(
+    rvizConfig = os.path.join(get_package_share_directory(namePackage), 'rviz', 'wheelchair_one')
+
+    rvizNode = Node(
         package='rviz2',
         executable='rviz2',
+        parameters=[{'use_sim_time': False}],
         output='screen'
     )
 
-    node_joint_state_publisher_gui = Node(
+    jointStatePublisherGui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
         output='screen'
@@ -38,14 +44,8 @@ def generate_launch_description():
 
     # Launch!
     return LaunchDescription([
-        DeclareLaunchArgument(
-            'use_sim_time',
-            default_value='false',
-            description='Use sim time if true'),
-
-        # node_robot_state_publisher,         # comment out when running with gazebo
-        node_rviz,
-        # node_joint_state_publisher_gui,   # comment out when running with gazebo
+        robotStatePublisher,
+        rvizNode,
+        jointStatePublisherGui,
     ])
-
     
