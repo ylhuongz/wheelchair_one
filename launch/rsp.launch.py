@@ -8,7 +8,7 @@ import xacro
 
 def generate_launch_description():
     # Check if we're told to use sim time
-    use_sim_time = False
+    use_sim_time = False    # True for gazebo sim
 
     # Name of package and folder used to define the paths
     namePackage = 'wheelchair_one'
@@ -32,7 +32,7 @@ def generate_launch_description():
     rvizNode = Node(
         package='rviz2',
         executable='rviz2',
-        parameters=[{'use_sim_time': False}],
+        parameters=[{'use_sim_time': use_sim_time}],
         output='screen'
     )
 
@@ -46,6 +46,6 @@ def generate_launch_description():
     return LaunchDescription([
         robotStatePublisher,
         rvizNode,
-        jointStatePublisherGui,
+        # jointStatePublisherGui,
     ])
     
