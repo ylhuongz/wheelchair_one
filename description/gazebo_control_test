@@ -22,17 +22,17 @@
         <material>Gazebo/Black</material>
     </gazebo>
 
-    <gazebo reference="caster">
+    <gazebo reference="caster_left">
         <mu1>0.000002</mu1>
         <mu2>0.000002</mu2>
         <material>Gazebo/Blue</material>
     </gazebo>
 
-    <!-- <gazebo reference="caster_right">
+    <gazebo reference="caster_right">
         <mu1>0.000002</mu1>
         <mu2>0.000002</mu2>
         <material>Gazebo/Blue</material>
-    </gazebo> -->
+    </gazebo>
 
 
     <!-- Differential Drive Controller -->
@@ -48,8 +48,8 @@
             <right_joint>right_wheel_joint</right_joint>
 
             <!-- kinematics -->
-            <wheel_separation>${2*s4}</wheel_separation>
-            <wheel_diameter>${2*r}</wheel_diameter>
+            <wheel_separation>${2*wheel_to_body_top}</wheel_separation>
+            <wheel_diameter>${2*r_wheel}</wheel_diameter>
 
             <!-- limits -->
             <max_linear_acceleration>0.5</max_linear_acceleration>
@@ -70,79 +70,80 @@
             <topic>joint_states</topic>
             <joint_name>left_wheel_joint</joint_name>
             <joint_name>right_wheel_joint</joint_name>
-            <joint_name>caster_joint</joint_name>
-            <!-- <joint_name>caster_right_joint</joint_name> -->
+            <joint_name>caster_left_joint</joint_name>
+            <joint_name>caster_right_joint</joint_name>
         </plugin>
     </gazebo>
 
     
     <!-- LiDAR Sensor -->
-    <gazebo>
+    <!-- <gazebo>
         <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
             <render_engine>ogre2</render_engine>
         </plugin>
-    </gazebo>
+    </gazebo> -->
 
-    <gazebo reference="lidar">
+    <gazebo reference="laser_frame">
         <material>Gazebo/Red</material>
 
-        <sensor name="gpu_lidar" type="gpu_lidar">
-            <pose relative_to='lidar'>0 0 0 0 0 0</pose>
+        <sensor name="laser" type="gpu_lidar">
+            <pose relative_to='laser_frame'>0 0 0.05 0 0 0</pose>
             
-            <always_on>true</always_on>
+            <!-- <always_on>true</always_on> -->
             <visualize>true</visualize>
-            <topic>scan</topic>
             <update_rate>10</update_rate> <!-- Hz -->
-            <gz_frame_id>lidar</gz_frame_id>
             
             <lidar>
                 <scan>
                     <horizontal>
-                        <samples>720</samples>   <!-- # of beams -->
-                        <resolution>1</resolution>   <!-- rays per sample increment -->
+                        <samples>360</samples>   <!-- # of beams -->
+                        <!-- <resolution>1</resolution>   rays per sample increment -->
                         <min_angle>-3.14</min_angle>   <!-- start angle (-180 deg) -->
                         <max_angle>3.14</max_angle>   <!-- end angle (+180 deg) -->
                     </horizontal>
                 </scan>
-
                 <range>
-                    <min>0.01</min>
-                    <max>12.0</max>
-                    <resolution>0.005</resolution>   <!-- 0.005 -->
+                    <min>0.03</min>
+                    <max>25.0</max>
+                    <!-- <resolution>0.01</resolution>   0.005 -->
                 </range>
-
-                <noise>
+                <!-- <noise>
                     <type>gaussian</type>
                     <mean>0.0</mean>
                     <stddev>0.001</stddev>
-                </noise>
+                </noise> -->
             </lidar>
+
+            <topic>scan</topic>
+            <gz_frame_id>laser_frame</gz_frame_id>
         </sensor>
     </gazebo>
 
     <!-- Depth Camera -->
-    <gazebo reference="camera">
+    <gazebo reference="camera_link">
         <material>Gazebo/Black</material>
 
-        <sensor name="depth_camera" type="depth_camera">
+        <sensor name="camera" type="depth">
             <pose>0 0 0.05 0 0 0</pose>
             <visualize>true</visualize>
-            <update_rate>20</update_rate>
-            <topic>camera</topic>
-            <gz_frame_id>camera</gz_frame_id>
+            <update_rate>10</update_rate>
         
             <camera>
-                <horizontal_fov>1.047</horizontal_fov>
+                <camera_info_topic>camera/camera_info</camera_info_topic>
+                <horizontal_fov>1.089</horizontal_fov>
                 <image>
+                    <format>R8G8B8</format>
                     <width>1280</width>
                     <height>720</height>
-                    <format>B8G8R8</format>
                 </image>
                 <clip>
                     <near>0.6</near>
                     <far>6.0</far>
                 </clip>
             </camera>
+
+            <topic>camera/image_raw</topic>
+            <gz_frame_id>camera_link_optical</gz_frame_id>
         </sensor>
     </gazebo>
     

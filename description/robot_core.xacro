@@ -28,15 +28,10 @@
     <xacro:property name="wheel_to_body_top" value="${w/2+t_wheel/2}"/>
     <xacro:property name="caster_to_body_top" value="${w/2+t_caster/2}"/>
 
-    <!-- Material Density -->
-    <xacro:property name="d_body" value="7850.0"/>
-    <xacro:property name="d_wheel" value="7850.0"/>
-    <xacro:property name="d_caster" value="7850.0"/>
-
     <!-- Wheelchair Mass -->
-    <xacro:property name="m_body" value="${d_body*l*w*h}"/>
-    <xacro:property name="m_wheel" value="${d_wheel*pi_const*r_wheel*r_wheel*t_wheel}"/>
-    <xacro:property name="m_caster" value="${d_caster*pi_const*r_caster*r_caster*t_caster}"/>
+    <xacro:property name="m_body" value="20.0"/>
+    <xacro:property name="m_wheel" value="2.0"/>
+    <xacro:property name="m_caster" value="0.5"/>
 
     <!-- Moment of Inertia of Body -->
     <xacro:property name="Ix_body" value="${(1/12)*m_body*(h*h+w*w)}"/>
@@ -92,7 +87,7 @@
     </material>
 
     <material name="red">
-        <color rgba="0 1 0 1"/>
+        <color rgba="1 0 0 1"/>
     </material>
 
     <material name="grey">
@@ -151,7 +146,7 @@
     <joint name="left_wheel_joint" type="continuous">
         <parent link="chassis"/>
         <child link="left_wheel"/>
-        <origin xyz="${-wheel_to_body_side} ${-wheel_to_body_top} ${r_wheel}" rpy="0 0 0" />
+        <origin xyz="${-wheel_to_body_side} ${wheel_to_body_top} ${r_wheel}" rpy="0 0 0" />
         <axis xyz="0 1 0"/>
         <limit effort="50000" velocity="10"/>
         <dynamic damping="1.0" friction="1.0"/>
@@ -180,7 +175,7 @@
     <joint name="right_wheel_joint" type="continuous">
         <parent link="chassis"/>
         <child link="right_wheel"/>
-        <origin xyz="${-wheel_to_body_side} ${wheel_to_body_top} ${r_wheel}" rpy="0 0 0" />
+        <origin xyz="${-wheel_to_body_side} ${-wheel_to_body_top} ${r_wheel}" rpy="0 0 0" />
         <axis xyz="0 1 0"/>
         <limit effort="50000" velocity="10"/>
         <dynamic damping="1.0" friction="1.0"/>
@@ -268,11 +263,10 @@
     <joint name="lidar_joint" type="fixed">
         <origin xyz="0 0 ${h+r_caster}" rpy="0 0 0"/>
         <parent link="chassis"/>
-        <child link="lidar"/>
-        <axis xyz="0 1 0" rpy="0 0 0"/>
+        <child link="laser_frame"/>
     </joint>
 
-    <link name="lidar">
+    <link name="laser_frame">
         <visual>
             <origin xyz="0 0 0.05" rpy="0 0 0"/>
             <geometry>
@@ -289,10 +283,10 @@
         </collision>
 
         <inertial>
-            <mass value="1e-6"/>
+            <mass value="0.2"/>
             <origin xyz="0 0 0.05" rpy="0 0 0"/>
-            <inertia ixx="1e-6" ixy="0" ixz="0"
-                     iyy="1e-6" iyz="0" izz="1e-6"/>
+            <inertia ixx="0.0006667" ixy="0" ixz="0"
+                     iyy="0.0006667" iyz="0" izz="0.001"/>
         </inertial>
     </link>
 
@@ -302,11 +296,11 @@
     <!-- ############################################################## -->
     <joint name="camera_joint" type="fixed">
         <parent link="chassis"/>
-        <child link="camera"/>
+        <child link="camera_link"/>
         <origin xyz="0 0 ${h+r_caster+0.2}" rpy="0 0 0"/>
     </joint>
 
-    <link name="camera">
+    <link name="camera_link">
         <visual>
             <geometry>
                 <box size="0.1 0.3 0.1"/>
@@ -323,17 +317,17 @@
         <inertial>
             <mass value="0.1"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
-            <inertia ixx="0.000166667" ixy="0" ixz="0"
-                     iyy="0.000166667" iyz="0" izz="0.000166667"/>
+            <inertia ixx="0.000833333" ixy="0" ixz="0"
+                     iyy="0.000166667" iyz="0" izz="0.000833333"/>
         </inertial>
     </link>
 
     <joint name="camera_optical_joint" type="fixed">
-        <parent link="camera"/>
-        <child link="camera_optical"/>
+        <parent link="camera_link"/>
+        <child link="camera_link_optical"/>
         <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
     </joint>
 
-    <link name="camera_optical"/>
+    <link name="camera_link_optical"/>
 
 </robot>
